@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <title>Test Documentation</title>
+        <style>
+            body {
+                text-rendering: optimizeLegibility;
+                font-family: Source SansSerif Pro, Arial, sans-serif;
+                font-variant-ligatures: common-ligatures;
+                font-kerning: normal;
+                margin-left: 2rem;
+                background-color: #fff;
+                color: #000;
+            }
+
+            body > ul > li {
+                font-size: larger;
+            }
+
+            h2 {
+                font-size: larger;
+                text-decoration-line: underline;
+                text-decoration-thickness: 2px;
+                margin: 0;
+                padding: 0.5rem 0;
+            }
+
+            ul {
+                list-style: none;
+                margin: 0 0 2rem;
+                padding: 0 0 0 1rem;
+                text-indent: -1rem;
+            }
+
+            .success:before {
+                color: #4e9a06;
+                content: '✓';
+                padding-right: 0.5rem;
+            }
+
+            .defect {
+                color: #a40000;
+            }
+
+            .defect:before {
+                color: #a40000;
+                content: '✗';
+                padding-right: 0.5rem;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Category Api (Tests\Feature\CategoryApi)</h2>
+        <ul>
+            <li class="success">Index returns categories</li>
+            <li class="success">Show returns category</li>
+        </ul>
+        <h2>Example (Tests\Feature\Example)</h2>
+        <ul>
+            <li class="success">The application returns a successful response</li>
+        </ul>
+        <h2>Order Api (Tests\Feature\OrderApi)</h2>
+        <ul>
+            <li class="success">Store creates order</li>
+            <li class="success">Index returns orders</li>
+        </ul>
+        <h2>Order Edge Cases (Tests\Feature\OrderEdgeCases)</h2>
+        <ul>
+            <li class="success">Insufficient stock returns 422</li>
+            <li class="success">Invalid product id returns validation error</li>
+            <li class="success">Invalid qty returns validation error</li>
+            <li class="success">Stock decrements and total is correct</li>
+            <li class="success">Sequential orders second fails when stock exhausted</li>
+        </ul>
+        <h2>Product Api (Tests\Feature\ProductApi)</h2>
+        <ul>
+            <li class="success">Can get products</li>
+            <li class="success">Can get product by id</li>
+            <li class="success">Returns 404 when product not found</li>
+            <li class="success">Can filter products by category</li>
+            <li class="success">Can search products by name</li>
+            <li class="success">Can filter products by price range</li>
+        </ul>
+        <h2>Setting Api (Tests\Feature\SettingApi)</h2>
+        <ul>
+            <li class="success">Index returns settings</li>
+            <li class="success">Show bank account setting</li>
+        </ul>
+    </body>
+</html>

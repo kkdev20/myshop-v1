@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --container: 1200px;
+}
+
+html, body {
+  @apply bg-gray-50 text-gray-800;
+  height: 100%;
+}
+
+* { box-sizing: border-box }
+
+.container { max-width: var(--container); margin-left: auto; margin-right: auto; padding-left: 1rem; padding-right: 1rem }
+
+.btn { @apply px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 }
+.btn-muted { @apply px-3 py-1 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 }

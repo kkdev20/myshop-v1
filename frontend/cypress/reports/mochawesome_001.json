@@ -1,0 +1,181 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 5,
+    "passes": 5,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-10-29T01:45:40.299Z",
+    "end": "2025-10-29T01:46:18.129Z",
+    "duration": 37830,
+    "testsRegistered": 5,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "d9d25650-661a-4e51-a6db-6437cfca2d94",
+      "title": "",
+      "fullFile": "cypress\\e2e\\checkout.cy.js",
+      "file": "cypress\\e2e\\checkout.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "65c8e981-7664-4585-9440-ecbecca1cfc1",
+          "title": "Checkout Flow",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "shows checkout form and summary",
+              "fullTitle": "Checkout Flow shows checkout form and summary",
+              "timedOut": null,
+              "duration": 6319,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('h1').contains('Checkout');\ncy.get('[data-cy=checkout-name]').should('be.visible');\ncy.get('[data-cy=checkout-address]').should('be.visible');\ncy.get('[data-cy=checkout-phone]').should('be.visible');\ncy.get('aside').contains('Order Summary');",
+              "err": {},
+              "uuid": "fe5c11a3-f20b-440d-aa5b-c34282f598ef",
+              "parentUUID": "65c8e981-7664-4585-9440-ecbecca1cfc1",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "validates phone number",
+              "fullTitle": "Checkout Flow validates phone number",
+              "timedOut": null,
+              "duration": 7862,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('[data-cy=checkout-name]').type('Bali Tester');\ncy.get('[data-cy=checkout-address]').type('Jl. Sunset Road No. 123');\ncy.get('[data-cy=checkout-phone]').type('abc123');\ncy.get('[data-cy=submit-order]').click();\ncy.get('[data-cy=phone-error]').should('exist').and('contain', 'Invalid phone number');",
+              "err": {},
+              "uuid": "d14dbc09-fd3a-489c-86d5-92a4a32a0616",
+              "parentUUID": "65c8e981-7664-4585-9440-ecbecca1cfc1",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "submits order successfully (mocked)",
+              "fullTitle": "Checkout Flow submits order successfully (mocked)",
+              "timedOut": null,
+              "duration": 7909,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.intercept('POST', '**/orders', {\n  statusCode: 200,\n  body: {\n    id: 99\n  }\n}).as('placeOrder');\ncy.get('[data-cy=checkout-name]').type('Bali Tester');\ncy.get('[data-cy=checkout-address]').type('Jl. Sunset Road No. 123');\ncy.get('[data-cy=checkout-phone]').type('08123456789');\ncy.get('[data-cy=submit-order]').click();\ncy.wait('@placeOrder');\ncy.url().should('include', '/thanks');",
+              "err": {},
+              "uuid": "4c052172-67b1-4ce6-aa76-825924c595d2",
+              "parentUUID": "65c8e981-7664-4585-9440-ecbecca1cfc1",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "handles transfer payment and loads bank account (mocked)",
+              "fullTitle": "Checkout Flow handles transfer payment and loads bank account (mocked)",
+              "timedOut": null,
+              "duration": 7581,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.intercept('GET', '**/settings/bank_account', {\n  statusCode: 200,\n  body: {\n    bank: 'BCA',\n    account_number: '1234567890',\n    account_name: 'PT MyShop'\n  }\n}).as('getBank');\ncy.get('select').select('Transfer');\ncy.wait('@getBank');\ncy.contains('Bank: BCA');\ncy.contains('Account: 1234567890');\ncy.contains('Name: PT MyShop');",
+              "err": {},
+              "uuid": "71ffb3f7-60b0-41b9-9ca4-71346eec5353",
+              "parentUUID": "65c8e981-7664-4585-9440-ecbecca1cfc1",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "shows message when no bank account found",
+              "fullTitle": "Checkout Flow shows message when no bank account found",
+              "timedOut": null,
+              "duration": 7935,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.intercept('GET', '**/settings/bank_account', {\n  statusCode: 404,\n  body: {}\n}).as('getBankEmpty');\ncy.get('select').select('Transfer');\ncy.wait('@getBankEmpty');\ncy.contains('No bank account configured');",
+              "err": {},
+              "uuid": "29cf393d-6f4b-4072-b572-3fa78c556c62",
+              "parentUUID": "65c8e981-7664-4585-9440-ecbecca1cfc1",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "fe5c11a3-f20b-440d-aa5b-c34282f598ef",
+            "d14dbc09-fd3a-489c-86d5-92a4a32a0616",
+            "4c052172-67b1-4ce6-aa76-825924c595d2",
+            "71ffb3f7-60b0-41b9-9ca4-71346eec5353",
+            "29cf393d-6f4b-4072-b572-3fa78c556c62"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 37606,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.0"
+    }
+  }
+}

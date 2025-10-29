@@ -1,0 +1,143 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 3,
+    "passes": 3,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-10-29T01:47:19.239Z",
+    "end": "2025-10-29T01:47:48.557Z",
+    "duration": 29318,
+    "testsRegistered": 3,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "4773d3c9-8858-45eb-b12b-9a04d254bfe7",
+      "title": "",
+      "fullFile": "cypress\\e2e\\pagination.cy.js",
+      "file": "cypress\\e2e\\pagination.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "cda6ee89-3845-47be-b342-c7a060f12305",
+          "title": "Product Pagination",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should render pagination info and page buttons",
+              "fullTitle": "Product Pagination should render pagination info and page buttons",
+              "timedOut": null,
+              "duration": 4862,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('[data-cy=\"pagination-info\"]').should('exist');\ncy.get('[data-cy^=\"page-\"]').should('have.length.greaterThan', 0);",
+              "err": {},
+              "uuid": "32256607-7f49-49b7-be4c-28863f5fecf9",
+              "parentUUID": "cda6ee89-3845-47be-b342-c7a060f12305",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should update URL when clicking a page number",
+              "fullTitle": "Product Pagination should update URL when clicking a page number",
+              "timedOut": null,
+              "duration": 14149,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// klik page 2\ncy.get('[data-cy=\"page-2\"]').should('be.visible').click({\n  force: true\n});\ncy.wait('@getProducts');\ncy.url().should('include', 'page=2');\n// tunggu render selesai sebelum klik balik page 1\ncy.get('[data-cy=\"page-1\"]').should('be.visible').click({\n  force: true\n});\ncy.wait('@getProducts');\ncy.url().should('include', 'page=1');",
+              "err": {},
+              "uuid": "f08e46b6-3140-41f7-9239-75eba8171fcd",
+              "parentUUID": "cda6ee89-3845-47be-b342-c7a060f12305",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should hide pagination when only one page",
+              "fullTitle": "Product Pagination should hide pagination when only one page",
+              "timedOut": null,
+              "duration": 10163,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('/?total=10&per_page=20'); // total < perPage = cuma 1 halaman\ncy.wait('@getProducts');\ncy.get('[data-cy=\"pagination-info\"]').should('not.exist');\ncy.get('[data-cy^=\"page-\"]').should('not.exist');",
+              "err": {},
+              "uuid": "4c262aac-a72d-4b3b-b72d-2b4c76afb4eb",
+              "parentUUID": "cda6ee89-3845-47be-b342-c7a060f12305",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "32256607-7f49-49b7-be4c-28863f5fecf9",
+            "f08e46b6-3140-41f7-9239-75eba8171fcd",
+            "4c262aac-a72d-4b3b-b72d-2b4c76afb4eb"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 29174,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.0"
+    }
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-10-29T01:45:15.341Z",
+    "end": "2025-10-29T01:45:38.089Z",
+    "duration": 22748,
+    "testsRegistered": 4,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "d531f659-35e5-46ee-9c58-270a581db813",
+      "title": "",
+      "fullFile": "cypress\\e2e\\cart.cy.js",
+      "file": "cypress\\e2e\\cart.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "6b049bac-75db-4f99-b80d-dc43976266b4",
+          "title": "Shopping Cart",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should add items to cart",
+              "fullTitle": "Shopping Cart should add items to cart",
+              "timedOut": null,
+              "duration": 5403,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Add first product to cart\ncy.get('[data-cy=\"add-to-cart\"]').first().click();\n// Verify toast notification (using our custom toast)\ncy.get('[aria-live=\"polite\"]').find('div[class*=\"bg-green-600\"]').should('be.visible');\n// Verify cart counter\n// Wait for counter to update and be visible\ncy.get('[data-cy=\"cart-count\"]').should('be.visible').and($counter => {\n  const count = parseInt($counter.text());\n  expect(count).to.equal(1);\n});",
+              "err": {},
+              "uuid": "ddf991cd-abd2-4270-ab48-853273ca1c4d",
+              "parentUUID": "6b049bac-75db-4f99-b80d-dc43976266b4",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should show items in cart page",
+              "fullTitle": "Shopping Cart should show items in cart page",
+              "timedOut": null,
+              "duration": 6275,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Add product to cart\ncy.get('[data-cy=\"add-to-cart\"]').first().click();\n// Go to cart page\ncy.get('[data-cy=\"cart-link\"]').click();\n// Verify cart items\ncy.get('[data-cy=\"cart-item\"]').should('have.length', 1);\ncy.get('[data-cy=\"cart-total\"]').should('be.visible');",
+              "err": {},
+              "uuid": "1cb61327-644b-4925-8b81-fb43d2496760",
+              "parentUUID": "6b049bac-75db-4f99-b80d-dc43976266b4",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should update cart quantities",
+              "fullTitle": "Shopping Cart should update cart quantities",
+              "timedOut": null,
+              "duration": 6439,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Add product and go to cart\ncy.get('[data-cy=\"add-to-cart\"]').first().click();\ncy.get('[data-cy=\"cart-link\"]').click();\n// Update quantity: scope to the first cart item and select-all then type to replace value\ncy.get('[data-cy=\"cart-item\"]').first().within(() => {\n  cy.get('[data-cy=\"product-quantity\"]').click().type('{selectAll}2').should('have.value', '2').then($input => {\n    // trigger framework listeners\n    cy.wrap($input).trigger('input');\n    cy.wrap($input).trigger('change');\n  });\n});\n// Don't depend on timing of localStorage writes; verify via UI total update instead\n// Verify total updated and correct: get product price then wait for cart total to match price*2\ncy.get('[data-cy=\"product-price\"]').first().invoke('text').then(priceText => {\n  const price = parseInt(priceText.replace(/[^0-9]/g, ''));\n  cy.get('[data-cy=\"cart-total\"]').should('be.visible').invoke('text').should(text => {\n    const total = parseInt(text.replace(/[^0-9]/g, ''));\n    expect(total).to.equal(price * 2);\n  });\n});",
+              "err": {},
+              "uuid": "69c9308b-6c9a-4769-b750-a50289f01d0a",
+              "parentUUID": "6b049bac-75db-4f99-b80d-dc43976266b4",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should remove items from cart",
+              "fullTitle": "Shopping Cart should remove items from cart",
+              "timedOut": null,
+              "duration": 4419,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Add product and go to cart\ncy.get('[data-cy=\"add-to-cart\"]').first().click();\ncy.get('[data-cy=\"cart-link\"]').click();\n// Click remove button\ncy.get('[data-cy=\"remove-item\"]').first().click();\n// Verify item removed\ncy.get('[data-cy=\"cart-item\"]').should('have.length', 0);\n// Verify item removed from DOM\ncy.get('[data-cy=\"cart-item\"]').should('have.length', 0);\n// Debug: print cart localStorage after remove (helps diagnose race conditions)\ncy.window().its('localStorage').invoke('getItem', 'cart').then(v => {\n  cy.log('cart localStorage after remove:', v);\n  // also print to browser console for interactive runs\n  // eslint-disable-next-line no-console\n  console.log('cart localStorage after remove:', v);\n});\n// Ground-truth: localStorage cart should be empty\ncy.window().its('localStorage').invoke('getItem', 'cart').then(cart => {\n  const items = JSON.parse(cart || '[]');\n  expect(items).to.have.length(0);\n});\n// Tolerant assertion for cart count badge: accept either removed OR present-but-zero/hidden\ncy.get('body').then($body => {\n  const $count = $body.find('[data-cy=\"cart-count\"]');\n  if ($count.length === 0) {\n    cy.log('cart-count removed from DOM');\n  } else {\n    // element exists — verify it's either hidden or shows '0' / empty\n    cy.wrap($count).then($el => {\n      const txt = $el.text().trim();\n      const visible = $el.is(':visible');\n      if (visible) {\n        expect(['', '0']).to.include(txt);\n      } else {\n        // hidden is acceptable\n        expect(true).to.equal(true);\n      }\n    });\n  }\n});",
+              "err": {},
+              "uuid": "59dd26c2-3114-4eb4-9a97-b6511b9140aa",
+              "parentUUID": "6b049bac-75db-4f99-b80d-dc43976266b4",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "ddf991cd-abd2-4270-ab48-853273ca1c4d",
+            "1cb61327-644b-4925-8b81-fb43d2496760",
+            "69c9308b-6c9a-4769-b750-a50289f01d0a",
+            "59dd26c2-3114-4eb4-9a97-b6511b9140aa"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 22536,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.0"
+    }
+  }
+}
